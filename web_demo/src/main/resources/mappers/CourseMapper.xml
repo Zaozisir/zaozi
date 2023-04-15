@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qf.zaozi.jwms.dao.CourseDao">
+    <select id="selectByIdAndPwd" resultType="com.qf.zaozi.jwms.pojo.Teacher">
+        select * from tb_teacher where teacher_id = #{tid} and teacher_login_pwd = #{pwd};
+    </select>
+
+    <insert id="addCourse" >
+        insert into tb_course(course_id,course_name,course_score,course_xs,course_cap,course_desc,course_tid) values (#{courseId},#{courseName},#{courseScore},#{courseXs},#{courseCap},#{courseDesc},#{courseTid})
+    </insert>
+
+    <resultMap id="pageMap" type="Teacher">
+        <id column="teacher_id" property="teacherId"></id>
+        <id column="teacher_login_pwd" property="teacherLoginPwd"></id>
+        <id column="teacher_name" property="teacherName"></id>
+        <id column="teacher_gender" property="teacherGender"></id>
+        <id column="teacher_tel" property="teacherTel"></id>
+        <id column="teacher_level" property="teacherLevel"></id>
+        <id column="teacher_remark" property="teacherRemark"></id>
+    </resultMap>
+    <select id="selectByPage" resultMap="pageMap">
+        select * from tb_teacher limit #{start},#{limit}
+    </select>
+
+    <select id="selectCount" resultType="integer">
+        select count(1) from tb_teacher
+    </select>
+</mapper>
