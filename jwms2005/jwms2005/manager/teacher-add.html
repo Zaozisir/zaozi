@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>添加教师信息</title>
+		<link rel="stylesheet" href="../layui/css/layui.css">
+		<script src="../layui/layui.js"></script>
+		
+	</head>
+	<body>
+		<h4>教师管理  >  添加教师</h4>
+		
+		<div style="width: 60%;margin: center;">
+		
+		<form class="layui-form" action="">
+			<!-- 教师工号 -->
+		  <div class="layui-form-item">
+		    <label class="layui-form-label">工号</label>
+		    <div class="layui-input-block">
+		      <input type="text" name="title" required  id="tid" placeholder="请输入教师工号" autocomplete="off" class="layui-input">
+		    </div>
+		  </div>
+		  <!-- 教师姓名 -->
+		  <div class="layui-form-item">
+		    <label class="layui-form-label">姓名									</label>
+		    <div class="layui-input-block">
+		      <input type="text" name="title" required id="tname"  placeholder="请输入教师姓名" autocomplete="off" class="layui-input">
+		    </div>
+		  </div>
+		  
+		  <!-- 教师性别-->
+		  
+		  <div class="layui-form-item">
+		    <label class="layui-form-label">性别</label>
+		    <div class="layui-input-block">
+		      <input type="radio" name="sex" value="男" title="男">
+		      <input type="radio" name="sex" value="女" title="女" checked>
+		    </div>
+		  </div>
+		  
+		  <!-- 教师手机-->
+		  <div class="layui-form-item">
+		    <label class="layui-form-label">手机</label>
+		    <div class="layui-input-block">
+		      <input type="text" name="title" required  id="ttel" placeholder="请输入教师手机" autocomplete="off" class="layui-input">
+		    </div>
+		  </div>
+		  
+		  <!-- 教师职级-->
+		  <div class="layui-form-item">
+		    <label class="layui-form-label">职级</label>
+		    <div class="layui-input-block">
+		      
+			  <select id="tlevel">
+			  	<option value="讲师">讲师</option>
+				<option value="副教授">副教授</option>
+				<option value="教授">教授</option>
+			  </select>
+		    </div>
+		  </div>
+		  
+		  
+		  
+		  
+		  <div class="layui-form-item layui-form-text">
+		    <label class="layui-form-label">备注</label>
+		    <div class="layui-input-block">
+		      <textarea name="desc" id="tremark"  placeholder="请输入教师备注信息" class="layui-textarea"></textarea>
+		    </div>
+		  </div>
+		  
+		  
+		
+		  <div class="layui-form-item">
+		    <div class="layui-input-block">
+		      <button class="layui-btn" type="button" id="subBtn" >立即提交</button>
+		      <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+		    </div>
+		  </div>
+		</form>
+		 
+		 
+		 
+		</div>
+		 
+		<script>
+		//Demo
+		layui.use('form', function(){
+		  var form = layui.form;
+		  
+		  //提交
+		  form.on('submit(formDemo)', function(data){
+		    layer.msg(JSON.stringify(data.field));
+		    return false;
+		  });
+		});
+		</script>
+		
+		<script src="../js/jquery-3.6.0.js"></script>
+		<script type="text/javascript">
+			$("#subBtn").click(function(){
+				//alert(1);
+				//获取页面中输入的教师信息
+				var tid=$("#tid").val();
+				var tname=$("#tname").val();
+				var ttel=$("#ttel").val();
+				var tremark=$("tremark").val();
+				
+				//性别
+				var arr=$("input[name='sex']");
+				var tgender=arr[0].checked ?arr[0].value:arr[1].value;
+				//职级
+				var  tlevel=$("#tlevel").val();
+				//alert(tid+"~~~~"+tname+"~~~~"+ttel+"~~~~~"+tremark+"~~~~"+tgender+"~~~~"+tlevel);
+				//2.将教师信息提交TeacherController中的db.collection中的add
+				var url = "http://localhost:8080/teacher/addTeacher";
+					var params = {
+						teacherId:tid,
+						teacherName:tname,
+						teacherGender:tgender,
+						teacherTel:ttel,
+						teacherLevel:tlevel,
+						teacherRemark:tremark
+					};
+				$.post(url,params,function(res){
+					alert(res.msg);
+						if(res.code === 1){
+							window.location.reload();								
+						}
+				},"json");
+			});
+		</script>
+	</body>
+</html>

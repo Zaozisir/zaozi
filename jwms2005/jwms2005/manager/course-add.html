@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>添加课程信息</title>
+		<link rel="stylesheet" href="../layui/css/layui.css">
+		<script src="../layui/layui.js"></script>
+
+	</head>
+	<body>
+		<h4>课程管理 > 添加课程</h4>
+
+		<div style="width: 60%;margin: center;">
+
+			<form class="layui-form" action="">
+				<!-- 课程编号 -->
+				<div class="layui-form-item">
+					<label class="layui-form-label">编号</label>
+					<div class="layui-input-block">
+						<input type="text" name="cid" required lay-verify="required" placeholder="请输入课程编号"
+							autocomplete="off" class="layui-input">
+					</div>
+				</div>
+				<!--  课程名 -->
+				<div class="layui-form-item">
+					<label class="layui-form-label">课程名</label>
+					<div class="layui-input-block">
+						<input type="text" name="cname" required lay-verify="required" placeholder="请输入课程名"
+							autocomplete="off" class="layui-input">
+					</div>
+				</div>
+
+
+
+				<!-- 课程学分-->
+				<div class="layui-form-item">
+					<label class="layui-form-label">课程学分</label>
+					<div class="layui-input-block">
+						<input type="text" name="cscore" required lay-verify="required" placeholder="请输入课程学分 "
+							autocomplete="off" class="layui-input">
+					</div>
+				</div>
+
+				<!-- 课程学时-->
+				<div class="layui-form-item">
+					<label class="layui-form-label">课程学时</label>
+					<div class="layui-input-block">
+						<input type="text" name="cxs" required lay-verify="required" placeholder="请输入课程学时 "
+							autocomplete="off" class="layui-input">
+					</div>
+				</div>
+
+				<!-- 课程容量-->
+				<div class="layui-form-item">
+					<label class="layui-form-label">课程容量</label>
+					<div class="layui-input-block">
+						<input type="text" name="cap" required lay-verify="required" placeholder="请输入课程容量 "
+							autocomplete="off" class="layui-input">
+					</div>
+				</div>
+
+
+
+
+				<div class="layui-form-item layui-form-text">
+					<label class="layui-form-label">描述</label>
+					<div class="layui-input-block">
+						<textarea name="desc" id="cdesc" placeholder="请输入课程描述 信息" class="layui-textarea"></textarea>
+					</div>
+				</div>
+
+				<div class="layui-form-item">
+					<div class="layui-input-block">
+						<button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
+						<button type="reset" class="layui-btn layui-btn-primary">重置</button>
+					</div>
+				</div>
+			</form>
+		</div>
+		</form>
+
+
+
+		</div>
+
+		<script>
+			//Demo
+			layui.use('form', function() {
+				var form = layui.form;
+
+				//提交
+				form.on('submit(formDemo)', function(data) {
+					layer.msg(JSON.stringify(data.field));
+					return false;
+				});
+			});
+		</script>
+
+		<script src="../js/jquery-3.6.0.js"></script>
+		<script type="text/javascript">
+			$("#subBtn").click(function() {
+				//alert(1);
+				//获取页面中输入的教师信息
+				var cid = $("#cid").val();
+				var cname = $("#cname").val();
+				var score = $("#cscore").val();
+				var xs = $("cxs").val();
+				var cap = $("cap").val();
+				var cdesc = $("cdesc").val();
+				//alert(tid+"~~~~"+tname+"~~~~"+ttel+"~~~~~"+tremark+"~~~~"+tgender+"~~~~"+tlevel);
+				//2.将教师信息提交TeacherController中的db.collection中的add
+				var url = "http://localhost:8080/course/addCourse";
+				var params = {
+					courseId: cid,
+					courseName: cname,
+					courseScore: score,
+					courseXs: xs,
+					courseCap: cap,
+					courseDesc: cdesc
+				};
+				$.post(url, params, function(res) {
+					alert(res.msg);
+					if (res.code === 1) {
+						window.location.reload();
+					}
+				}, "json");
+			});
+		</script>
+	</body>
+</html>
+<!--  -->
